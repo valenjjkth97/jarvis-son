@@ -17,5 +17,10 @@ for i, l in enumerate(lineas):
     if l.startswith("> "):
         inicio = i + 1                                     # después del eco de la pregunta
 resp = " ".join(l.strip() for l in lineas[inicio:] if l.strip() and l.strip() != "Exiting...")
+if "</think>" in resp:                                     # razonamiento filtrado: quedarse con lo de después
+    despues = resp.rsplit("</think>", 1)[1].strip()
+    resp = despues or resp.replace("</think>", " ")
+resp = re.sub(r"</?think>|\*\*|__|#+ ", "", resp)          # etiquetas y marcas de markdown
+resp = re.sub(r"\s+", " ", resp).strip()
 print(resp)
 print(tps.group(1) if tps else "")
