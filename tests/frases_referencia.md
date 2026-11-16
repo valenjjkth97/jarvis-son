@@ -1,28 +1,29 @@
 # Corpus de evaluación STT (20 frases)
 
-Frases cortas, sin datos personales. Cada audio se graba con consentimiento y NO se sube al repositorio.
+Frases cortas tipo pregunta a un asistente, sin datos personales. Los audios se graban con consentimiento, se procesan y se borran. No se suben al repositorio.
+El archivo `tests/frases.txt` tiene las mismas frases, una por línea, para el script de evaluación.
 
-| # | Texto de referencia exacto | Condición |
-| --- | --- | --- |
-| 1 | | Silencio |
-| 2 | | Silencio |
-| 3 | | Silencio |
-| 4 | | Silencio |
-| 5 | | Silencio |
-| 6 | | Silencio |
-| 7 | | Silencio |
-| 8 | | Silencio |
-| 9 | | Silencio |
-| 10 | | Silencio |
-| 11 | | Silencio |
-| 12 | | Silencio |
-| 13 | | Silencio |
-| 14 | | Silencio |
-| 15 | | Silencio |
-| 16 | | Silencio |
-| 17 | | Silencio |
-| 18 | | Silencio |
-| 19 | | Silencio |
-| 20 | | Silencio |
+| # | Texto de referencia |
+| --- | --- |
+| 1 | Hola Jarvis cómo estás |
+| 2 | Qué hora es en este momento |
+| 3 | Cuál es la capital de Colombia |
+| 4 | Explícame qué es la inteligencia artificial |
+| 5 | Dame una idea para el almuerzo de hoy |
+| 6 | Cuántos días tiene una semana |
+| 7 | Recomiéndame un libro para aprender a programar |
+| 8 | Qué es un sistema experto |
+| 9 | Cuéntame un dato curioso sobre el café |
+| 10 | Cómo se dice gracias en inglés |
+| 11 | Cuál es el planeta más grande del sistema solar |
+| 12 | Dime tres frutas tropicales |
+| 13 | Qué significa la palabra algoritmo |
+| 14 | Cuánto es doce por ocho |
+| 15 | Dame un consejo para estudiar mejor |
+| 16 | Quién escribió Cien años de soledad |
+| 17 | Qué es una red neuronal |
+| 18 | Cómo puedo ahorrar batería en el celular |
+| 19 | Cuál es el río más largo de Colombia |
+| 20 | Gracias Jarvis hasta luego |
 
-Repetir un subconjunto con ruido moderado, habla rápida y otro acento.
+Condiciones: las 20 en silencio. Un subconjunto (1, 5, 10, 15, 20) se repite con ruido moderado y con habla rápida.
