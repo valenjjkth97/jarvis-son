@@ -21,6 +21,7 @@ if "</think>" in resp:                                     # razonamiento filtra
     despues = resp.rsplit("</think>", 1)[1].strip()
     resp = despues or resp.replace("</think>", " ")
 resp = re.sub(r"</?think>|\*\*|__|#+ ", "", resp)          # etiquetas y marcas de markdown
+resp = re.sub(r"[\U00010000-\U0010FFFF\u2600-\u27BF\uFE0F\u200D]", "", resp)  # emojis
 resp = re.sub(r"\s+", " ", resp).strip()
 print(resp)
 print(tps.group(1) if tps else "")

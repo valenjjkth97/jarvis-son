@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurar
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Compilar
+        run: cmake --build build -j 2
+      - name: Pruebas
+        run: ctest --test-dir build --output-on-failure
+      - name: Revisar scripts de shell
+        run: for f in scripts/*.sh; do bash -n "$f"; done
