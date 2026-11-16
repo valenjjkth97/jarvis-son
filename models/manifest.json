@@ -1,34 +1,47 @@
 {
-  "_nota": "Registro de modelos y voces. No incluye los pesos. Completar cada campo al descargar.",
+  "_nota": "Registro de modelos usados por Jarvis-son V1. No incluye los pesos: se descargan con los comandos de 'descarga' y se verifican con sha256sum.",
   "modelos": [
     {
       "etapa": "STT",
-      "nombre": "ggml-tiny.bin (Whisper tiny multilingue)",
-      "version_o_revision": "",
-      "url_origen": "",
-      "formato_cuantizacion": "ggml",
-      "licencia": "",
-      "tamano_bytes": null,
-      "sha256": ""
+      "nombre": "ggml-base.bin (Whisper base multilingüe)",
+      "uso": "Elegido para la V1 (18/20 utilizables, WER 0,064)",
+      "url_origen": "https://huggingface.co/ggerganov/whisper.cpp",
+      "descarga": "cd ~/whisper.cpp && sh ./models/download-ggml-model.sh base",
+      "formato_cuantizacion": "ggml (sin cuantizar, f16)",
+      "licencia": "MIT (modelo Whisper de OpenAI y whisper.cpp)",
+      "tamano_aprox": "142 MiB",
+      "sha256": "60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe"
+    },
+    {
+      "etapa": "STT",
+      "nombre": "ggml-tiny.bin (Whisper tiny multilingüe)",
+      "uso": "Evaluado como línea base (15/20 utilizables); no se usa en la V1",
+      "url_origen": "https://huggingface.co/ggerganov/whisper.cpp",
+      "descarga": "cd ~/whisper.cpp && sh ./models/download-ggml-model.sh tiny",
+      "formato_cuantizacion": "ggml (sin cuantizar, f16)",
+      "licencia": "MIT",
+      "tamano_aprox": "75 MiB",
+      "sha256": "be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21"
     },
     {
       "etapa": "SLM",
-      "nombre": "Qwen3.5-0.8B Q4_0",
-      "version_o_revision": "",
-      "url_origen": "",
+      "nombre": "Qwen3.5-0.8B-Q4_0.gguf",
+      "uso": "Modelo de lenguaje de la V1",
+      "url_origen": "https://huggingface.co/ggml-org/Qwen3.5-0.8B-GGUF",
+      "descarga": "mkdir -p ~/models && cd ~/models && wget -c https://huggingface.co/ggml-org/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_0.gguf",
       "formato_cuantizacion": "GGUF Q4_0",
-      "licencia": "",
-      "tamano_bytes": null,
-      "sha256": ""
+      "licencia": "Apache-2.0 (Qwen3.5-0.8B)",
+      "tamano_bytes": 563036064,
+      "sha256": "57d1997790d1744fba5b40a7317df71ea5e2acee28c47e78f0cce39c0703f8cf"
     },
     {
       "etapa": "TTS",
-      "nombre": "Voz Piper es_MX (por confirmar)",
-      "version_o_revision": "",
+      "nombre": "Pendiente de la Etapa 5",
+      "uso": "",
       "url_origen": "",
-      "formato_cuantizacion": "ONNX",
+      "descarga": "",
+      "formato_cuantizacion": "",
       "licencia": "",
-      "tamano_bytes": null,
       "sha256": ""
     }
   ]
