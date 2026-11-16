@@ -36,13 +36,39 @@
     },
     {
       "etapa": "TTS",
-      "nombre": "Pendiente de la Etapa 5",
-      "uso": "",
-      "url_origen": "",
-      "descarga": "",
-      "formato_cuantizacion": "",
-      "licencia": "",
-      "sha256": ""
+      "nombre": "vits-piper-es_MX-ald-medium (voz Piper, español de México)",
+      "uso": "Voz de la V1 con sherpa-onnx v1.13.8 (RTF 0,105, RAM pico 178 MB)",
+      "url_origen": "https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models",
+      "descarga": "cd ~/models && wget -c https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-es_MX-ald-medium.tar.bz2 && tar xjf vits-piper-es_MX-ald-medium.tar.bz2",
+      "formato_cuantizacion": "ONNX (VITS), 22.050 Hz, 1 hablante",
+      "licencia": "Dataset Ald_Mexican_Spanish_speech_dataset: Unlicense (según MODEL_CARD). Voz afinada desde davefx (Piper); verificar la licencia de la voz base antes de redistribuir",
+      "tamano_aprox": "61 MiB (.onnx) + espeak-ng-data",
+      "sha256": "b8198f4e0495029a686db2f7a7cb70bd4b3d6fe4300e3ee743d8a82602194389"
+    }
+  ],
+  "runtimes": [
+    {
+      "nombre": "sherpa-onnx",
+      "version": "v1.13.8",
+      "url": "https://github.com/k2-fsa/sherpa-onnx",
+      "licencia": "Apache-2.0",
+      "nota": "v2.x quitó el fonemizador incluido; se usa la última 1.x"
+    },
+    {
+      "nombre": "onnxruntime (paquete de Termux)",
+      "version": "1.31.1",
+      "licencia": "MIT"
+    },
+    {
+      "nombre": "whisper.cpp",
+      "url": "https://github.com/ggml-org/whisper.cpp",
+      "licencia": "MIT"
+    },
+    {
+      "nombre": "llama.cpp",
+      "version": "build 9fba51d",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "licencia": "MIT"
     }
   ]
 }
