@@ -1,0 +1,30 @@
+# Pesos de modelos (se descargan con scripts/, no se versionan)
+*.gguf
+*.bin
+*.onnx
+*.onnx.json
+*.tflite
+models/*/
+!models/manifest.json
+
+# Audio y temporales (privacidad)
+*.wav
+*.m4a
+*.mp3
+*.ogg
+*.amr
+tmp/
+
+# Registros
+logs/
+*.log
+
+# Compilación
+build/
+*.o
+*.a
+*.so
+
+# Sistema
+.DS_Store
+Thumbs.db
