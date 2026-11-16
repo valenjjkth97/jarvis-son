@@ -20,6 +20,12 @@ int main() {
     assert(jarvis::quitar_emojis("Bogotá, ¿café?") == "Bogotá, ¿café?");
     const auto r3 = jarvis::extraer_respuesta("> P\nEl café ayuda. \xF0\x9F\x98\x8A\xE2\x98\x95\n[ Prompt: 1 t/s ]\n");
     assert(r3.texto == "El café ayuda.");
+    assert(jarvis::limpiar_transcripcion(" [Música]\n").empty());
+    assert(jarvis::limpiar_transcripcion("[MÚSICA]").empty());
+    assert(jarvis::limpiar_transcripcion("¿Qué es una red neuronal?") == "¿Qué es una red neuronal?");
+    assert(jarvis::recortar_frase_incompleta("Hola. Es importante usar el modo exces") == "Hola.");
+    assert(jarvis::recortar_frase_incompleta("Solo una frase cortada") == "Solo una frase cortada");
+    assert(jarvis::recortar_frase_incompleta("Bogotá.") == "Bogotá.");
     std::cout << "test_parser: OK\n";
     return 0;
 }

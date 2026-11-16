@@ -206,7 +206,7 @@ int main(int argc, char** argv) {
             t.slm_kb = r.rss_max_kb;
             const auto rs = extraer_respuesta(r.salida);
             t.tokens_s = rs.tokens_s;
-            respuesta = rs.texto;
+            respuesta = recortar_frase_incompleta(rs.texto);
             if (r.codigo != 0 && respuesta.empty()) ok = fallar(t, "slm", r.codigo, "llama-cli falló");
             else if (respuesta.empty()) ok = fallar(t, "slm", r.codigo, "respuesta vacía");
         }
