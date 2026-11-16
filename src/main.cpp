@@ -6,6 +6,7 @@
 
 #include <chrono>
 #include <cstdio>
+#include <cstdlib>
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -128,6 +129,12 @@ int main(int argc, char** argv) {
     }
 
     const Config c = cargar_config(ruta_conf);
+    // Las bibliotecas compartidas de sherpa-onnx viven en su carpeta de compilación
+    if (!c.get("sherpa_lib").empty()) {
+        const char* previo = std::getenv("LD_LIBRARY_PATH");
+        const std::string ruta = c.get("sherpa_lib") + (previo ? std::string(":") + previo : "");
+        setenv("LD_LIBRARY_PATH", ruta.c_str(), 1);
+    }
     const std::string tmp = c.get("dir_temporal", "tmp");
     const std::string csv = c.get("registro_csv", "logs/turnos.csv");
     mkdir(tmp.c_str(), 0700);
