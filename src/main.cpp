@@ -183,6 +183,7 @@ int main(int argc, char** argv) {
                 mostrar(Estado::Transcribiendo, "No te escuché bien. Intenta de nuevo.");
                 t.estado = "sin_voz";
                 ok = false;
+                hablar(c, "No te escuché bien. Intenta de nuevo.", wav_tts, t);  // aviso también por voz
             }
             if (ok) std::cout << "   Tú: " << pregunta << std::endl;
         }
