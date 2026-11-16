@@ -1,0 +1,21 @@
+n,condicion,referencia,transcripcion,wer,stt_ms,rss_max_kb,audio_s
+1,silencio,"Hola Jarvis cómo estás","Hola Gervis, ¿cómo está?",0.500,1135,178372,6.144000
+2,silencio,"Qué hora es en este momento","Que hora es en este momento?",0.000,960,179220,6.144000
+3,silencio,"Cuál es la capital de Colombia","¿Cuál es la capital de Colombia?",0.000,1126,179128,6.144000
+4,silencio,"Explícame qué es la inteligencia artificial","Esplícame que es la inteligencia necesidad.",0.333,1127,178884,6.144000
+5,silencio,"Dame una idea para el almuerzo de hoy","Me dan una idea para la almuerzo de hoy.",0.375,1155,179592,6.144000
+6,silencio,"Cuántos días tiene una semana","Cuando el día es tiene una semana",0.800,989,179112,6.144000
+7,silencio,"Recomiéndame un libro para aprender a programar","Recomiéndame un libro para aprender a programar.",0.000,1217,179712,6.144000
+8,silencio,"Qué es un sistema experto","que es un sistema esterto",0.200,967,179100,6.144000
+9,silencio,"Cuéntame un dato curioso sobre el café","Cuéntame un dato curioso sobre el café.",0.000,1162,177808,6.144000
+10,silencio,"Cómo se dice gracias en inglés","Como se dice gracias en inglés.",0.000,1231,177876,6.144000
+11,silencio,"Cuál es el planeta más grande del sistema solar","¿Cuál es el planeta más grande el sistema solar?",0.111,1479,178496,6.144000
+12,silencio,"Dime tres frutas tropicales","Dime tres frutas tropicales.",0.000,1053,177800,6.144000
+13,silencio,"Qué significa la palabra algoritmo","¿Qué significa la palabra algoritmo?",0.000,1058,176984,6.144000
+14,silencio,"Cuánto es doce por ocho","Cuanto es dulce por ocho.",0.200,1160,177980,6.144000
+15,silencio,"Dame un consejo para estudiar mejor","Dame un consejo para estudiar mejor.",0.000,1024,177592,6.144000
+16,silencio,"Quién escribió Cien años de soledad","¿Quién escribió el final de solidar?",0.500,1046,178020,6.144000
+17,silencio,"Qué es una red neuronal","que es una red neuronal",0.000,1069,177024,6.144000
+18,silencio,"Cómo puedo ahorrar batería en el celular","Como puedo ahorrar batería en el celular.",0.000,1126,177832,6.144000
+19,silencio,"Cuál es el río más largo de Colombia","¿Cuál es el río más largo de Colombia?",0.000,1312,178000,6.144000
+20,silencio,"Gracias Jarvis hasta luego","Gracias, Jordi. Hasta luego.",0.250,1103,177536,6.144000
