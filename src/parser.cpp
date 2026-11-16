@@ -5,6 +5,28 @@
 
 namespace jarvis {
 
+// Quita emojis y símbolos que el TTS leería por su nombre ("cara sonriente", etc.).
+// Se eliminan: secuencias UTF-8 de 4 bytes (U+10000 en adelante, donde están casi todos los emojis),
+// símbolos varios y dingbats (U+2600–U+27BF), el selector de variación U+FE0F y el unidor U+200D.
+std::string quitar_emojis(const std::string& s) {
+    std::string out;
+    for (size_t i = 0; i < s.size();) {
+        const auto c = static_cast<unsigned char>(s[i]);
+        size_t len = c < 0x80 ? 1 : (c >> 5) == 0x6 ? 2 : (c >> 4) == 0xE ? 3 : (c >> 3) == 0x1E ? 4 : 1;
+        if (i + len > s.size()) len = 1;
+        bool quitar = len == 4;
+        if (len == 3) {
+            const auto c1 = static_cast<unsigned char>(s[i + 1]), c2 = static_cast<unsigned char>(s[i + 2]);
+            quitar = (c == 0xE2 && c1 >= 0x98 && c1 <= 0x9E) ||                 // U+2600–U+27BF
+                     (c == 0xEF && c1 == 0xB8 && c2 == 0x8F) ||                 // U+FE0F
+                     (c == 0xE2 && c1 == 0x80 && c2 == 0x8D);                   // U+200D
+        }
+        if (!quitar) out.append(s, i, len);
+        i += len;
+    }
+    return out;
+}
+
 static std::string unir_lineas(const std::vector<std::string>& lineas) {
     std::string out;
     for (const auto& l : lineas) {
@@ -48,6 +70,7 @@ RespuestaSLM extraer_respuesta(const std::string& salida_llama) {
     }
     // 6. quitar etiquetas y marcas de markdown que el TTS leería en voz alta
     resp = std::regex_replace(resp, std::regex("</?think>|\\*\\*|__|#+ "), "");
+    resp = quitar_emojis(resp);
     resp = std::regex_replace(resp, std::regex("\\s+"), " ");
     const auto a = resp.find_first_not_of(' ');
     const auto b = resp.find_last_not_of(' ');

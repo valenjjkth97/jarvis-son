@@ -16,6 +16,10 @@ int main() {
     assert(jarvis::extraer_respuesta("").texto.empty());
     const auto r2 = jarvis::extraer_respuesta("> P\n**1.** Hola </think> **Bogotá** es la capital.\n[ Prompt: 1 t/s ]\n");
     assert(r2.texto == "Bogotá es la capital.");
+    assert(jarvis::quitar_emojis("Hola \xF0\x9F\x98\x8A Jarvis \xE2\x98\x95\xEF\xB8\x8F") == "Hola  Jarvis ");
+    assert(jarvis::quitar_emojis("Bogotá, ¿café?") == "Bogotá, ¿café?");
+    const auto r3 = jarvis::extraer_respuesta("> P\nEl café ayuda. \xF0\x9F\x98\x8A\xE2\x98\x95\n[ Prompt: 1 t/s ]\n");
+    assert(r3.texto == "El café ayuda.");
     std::cout << "test_parser: OK\n";
     return 0;
 }

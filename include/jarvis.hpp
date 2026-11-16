@@ -38,6 +38,9 @@ struct RespuestaSLM {
 };
 RespuestaSLM extraer_respuesta(const std::string& salida_llama);
 
+// Quita emojis y símbolos gráficos para que el TTS no los lea en voz alta
+std::string quitar_emojis(const std::string& s);
+
 // Limpia la transcripción de whisper-cli (espacios y saltos de línea)
 std::string limpiar_transcripcion(const std::string& salida_whisper);
 
