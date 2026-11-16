@@ -41,7 +41,10 @@ RespuestaSLM extraer_respuesta(const std::string& salida_llama);
 // Quita emojis y símbolos gráficos para que el TTS no los lea en voz alta
 std::string quitar_emojis(const std::string& s);
 
-// Limpia la transcripción de whisper-cli (espacios y saltos de línea)
+// Limpia la transcripción de whisper-cli; devuelve "" si solo hay marcas de ruido como [Música]
 std::string limpiar_transcripcion(const std::string& salida_whisper);
+
+// Si la respuesta se cortó por el límite de tokens, la deja en la última frase completa
+std::string recortar_frase_incompleta(const std::string& texto);
 
 }  // namespace jarvis

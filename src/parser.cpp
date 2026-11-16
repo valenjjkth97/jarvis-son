@@ -83,7 +83,20 @@ std::string limpiar_transcripcion(const std::string& salida_whisper) {
     std::istringstream in(salida_whisper);
     std::string l;
     while (std::getline(in, l)) lineas.push_back(l);
-    return unir_lineas(lineas);
+    std::string t = unir_lineas(lineas);
+    // Whisper marca el ruido o el silencio como [Música], [MÚSICA], (aplausos), [BLANK_AUDIO]...
+    // Si la transcripción es solo eso, no hubo voz.
+    const std::string sin_marcas = std::regex_replace(t, std::regex("\\[[^\\]]*\\]|\\([^)]*\\)|[ .,]"), "");
+    return sin_marcas.empty() ? "" : t;
+}
+
+std::string recortar_frase_incompleta(const std::string& texto) {
+    if (texto.empty()) return texto;
+    const std::string fin = ".?!\"";
+    if (fin.find(texto.back()) != std::string::npos) return texto;
+    const auto corte = texto.find_last_of(".?!");
+    // Solo se recorta si queda al menos una frase completa
+    return corte == std::string::npos ? texto : texto.substr(0, corte + 1);
 }
 
 }  // namespace jarvis

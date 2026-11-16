@@ -74,9 +74,10 @@ bool fallar(Turno& t, const std::string& etapa, int codigo, const std::string& p
 bool grabar(const Config& c, const std::string& crudo, const std::string& wav, Turno& t) {
     const int seg = c.get_int("segundos_grabacion", 6);
     ejecutar({"termux-microphone-record", "-q"}, false);
-    mostrar(Estado::Grabando, "Habla ahora (" + std::to_string(seg) + " s)...");
     auto r = ejecutar({"termux-microphone-record", "-f", crudo, "-l", std::to_string(seg)}, false);
     if (r.codigo != 0) return fallar(t, "grabacion", r.codigo, "revisa Termux:API y el permiso de micrófono");
+    // El aviso sale cuando la grabación ya empezó, para no cortar el inicio de la frase
+    mostrar(Estado::Grabando, "Habla ahora (" + std::to_string(seg) + " s)...");
     std::this_thread::sleep_for(std::chrono::seconds(seg + 1));
     ejecutar({"termux-microphone-record", "-q"}, false);
     if (tamano(crudo) == 0) return fallar(t, "grabacion", 0, "no se creó el audio");
@@ -150,6 +151,8 @@ int main(int argc, char** argv) {
 
     std::cout << "Jarvis-son V1 · modo " << (modo_texto ? "texto" : "voz") << " · registro en " << csv << "\n";
     int numero = 0;
+    const bool memoria = c.get_int("memoria_turno_anterior", 1) == 1;
+    std::string pregunta_previa, respuesta_previa;  // solo en memoria; no se guardan en disco
     while (true) {
         mostrar(Estado::Listo, modo_texto ? "Escribe tu pregunta (q para salir):"
                                           : "Presiona Enter para hablar (q + Enter para salir)");
@@ -180,16 +183,21 @@ int main(int argc, char** argv) {
                 mostrar(Estado::Transcribiendo, "No te escuché bien. Intenta de nuevo.");
                 t.estado = "sin_voz";
                 ok = false;
+                hablar(c, "No te escuché bien. Intenta de nuevo.", wav_tts, t);  // aviso también por voz
             }
             if (ok) std::cout << "   Tú: " << pregunta << std::endl;
         }
 
         std::string respuesta;
+        std::string entrada_slm = pregunta;
+        if (ok && memoria && !pregunta_previa.empty())
+            entrada_slm = "Turno anterior. Usuario: " + pregunta_previa + " | Jarvis: " + respuesta_previa +
+                          " | Pregunta actual: " + pregunta;
         if (ok) {
             mostrar(Estado::Generando, "Qwen pensando...");
             std::vector<std::string> args = {c.get("llama_cli"), "-m", c.get("llama_modelo"), "-c",
                                              c.get("contexto", "1024"), "-n", c.get("max_tokens", "96"), "-t",
-                                             c.get("hilos", "4"), "-sys", c.get("instruccion_sistema"), "-p", pregunta,
+                                             c.get("hilos", "4"), "-sys", c.get("instruccion_sistema"), "-p", entrada_slm,
                                              "-st", "--reasoning-budget", "0", "--simple-io"};
             if (!c.get("razonamiento").empty()) args.insert(args.end(), {"-rea", c.get("razonamiento")});
             if (!c.get("penalizacion_repeticion").empty())
@@ -199,12 +207,16 @@ int main(int argc, char** argv) {
             t.slm_kb = r.rss_max_kb;
             const auto rs = extraer_respuesta(r.salida);
             t.tokens_s = rs.tokens_s;
-            respuesta = rs.texto;
+            respuesta = recortar_frase_incompleta(rs.texto);
             if (r.codigo != 0 && respuesta.empty()) ok = fallar(t, "slm", r.codigo, "llama-cli falló");
             else if (respuesta.empty()) ok = fallar(t, "slm", r.codigo, "respuesta vacía");
         }
 
-        if (ok) hablar(c, respuesta, wav_tts, t);
+        if (ok) {
+            hablar(c, respuesta, wav_tts, t);
+            pregunta_previa = pregunta;
+            respuesta_previa = respuesta;
+        }
 
         borrar(crudo);
         borrar(wav);
@@ -213,7 +225,7 @@ int main(int argc, char** argv) {
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - inicio).count();
         registrar(csv, t);
         std::cout << "   tiempos: STT " << t.stt_ms << " ms | SLM " << t.slm_ms << " ms | TTS " << t.tts_ms
-                  << " ms | total " << t.total_ms << " ms | RAM pico SLM " << t.slm_kb / 1024 << " MB\n";
+                  << " ms | respuesta " << (t.stt_ms + t.slm_ms + t.tts_ms) << " ms | total " << t.total_ms << " ms | RAM pico SLM " << t.slm_kb / 1024 << " MB\n";
     }
     std::cout << "Hasta luego.\n";
     return 0;
